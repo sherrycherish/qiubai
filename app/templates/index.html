@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}糗事百科{% endblock %}
+
+{% block page_content %}
+<div class="post-tabs">
+    <ul class="nav nav-tabs">
+        <li{% if 8_hours %} class="active"{% endif %}><a href="{{ url_for('.index') }}">8小时</a></li>
+        <li{% if hot %} class="active"{% endif %}><a href="{{ url_for('.hot') }}">24小时</a></li>
+        <li{% if cross %} class="active"{% endif %}><a href="{{ url_for('.history') }}">穿越</a></li>
+    </ul>
+    {% include '_posts.html' %}
+</div>
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, '.index') }}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
