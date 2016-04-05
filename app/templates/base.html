@@ -1,3 +1,6 @@
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 {% extends "bootstrap/base.html" %}
 
 {% block title %}糗事百科{% endblock %}
@@ -24,15 +27,50 @@
             <li><a href="#">问答</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right ">
-            <li><a href="{{ url_for('auth.login') }}"><span class="glyphicon glyphicon-user"></span> 登录/注册</a></li>
+            <li><a href="{{ url_for('auth.login') }}">
+                <span class="glyphicon glyphicon-user" data-toggle="modal" data-target="#exampleModal"
+                        data-whatever="@fat">
+                </span> 登录/注册
+                </a>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="exampleModalLabel">使用用户名/密码登录</h4>
+                            </div>
+                            <div class="modal-body">
+                                <img src="static/weibo.png" href="https://open.weixin.qq.com/connect/">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">用户名</label>
+                                        <input type="text" class="form-control" id="recipient-name">
+                                    </div>
+                                     <div class="form-group">
+                                        <label for="recipient-name" class="control-label">密码</label>
+                                        <input type="text" class="form-control" id="recipient-name">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary" href="{{ url_for(main.index) }}">登录</button>
+                                <label for="recipient-name" class="control-label" href="{{ url_for(auth.reset_password) }}">忘了密码?</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
         </ul>
-{% block content %}
-<div class="container">
-    {% block page_content %}
-    {% endblock %}
-</div>
+        {% block content %}
+        <div class="container">
+            {% block page_content %}
+            {% endblock %}
+        </div>
 
-{% block scripts %}
-{{ super() }}
-{{ moment.include_moment() }}
-{% endblock %}
+        {% block scripts %}
+            {{ super() }}
+            {{ moment.include_moment() }}
+        {% endblock %}
