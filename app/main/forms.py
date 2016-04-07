@@ -3,7 +3,12 @@ from flask.ext.wtf import Form
 from wtforms import StringField, TextAreaField, SubmitField
 from wtforms.validators import InputRequired, Length
 from flask.ext.pagedown.fields import PageDownField
+import sys
+default_encoding = 'utf-8'
+if sys.getdefaultencoding() != default_encoding:
+    reload(sys)
 
+    sys.setdefaultencoding(default_encoding)
 
 class PostForm(Form):
     body = PageDownField("分享一件新鲜事...")
@@ -15,9 +20,3 @@ class CommentForm(Form):
     submit = SubmitField('发表')
 
 
-import sys
-default_encoding = 'utf-8'
-if sys.getdefaultencoding() != default_encoding:
-    reload(sys)
-
-    sys.setdefaultencoding(default_encoding)
