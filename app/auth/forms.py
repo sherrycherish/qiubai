@@ -4,6 +4,11 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import InputRequired, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from ..models import User
+import sys
+default_encoding = 'utf-8'
+if sys.getdefaultencoding() != default_encoding:
+    reload(sys)
+    sys.setdefaultencoding(default_encoding)
 
 
 class LoginForm(Form):
@@ -15,7 +20,7 @@ class LoginForm(Form):
 
 class RegistrationForm(Form):
     email = StringField('邮箱', validators=[InputRequired(), Length(1, 64), Email()])
-    username = StringField('用户名', validators=[InputRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$',0,
+    username = StringField('用户名', validators=[InputRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
                                                                                      'Usernames must have only letters,'
                                                                                     'numbers, dots or underscores')])
     password = PasswordField('密码', validators=[InputRequired(), EqualTo('confirm_password', message='密码必须一致')])
@@ -55,12 +60,7 @@ class PasswordResetForm(Form):
         if User.query.filter_by(email=field.data).first() is None:
             raise ValidationError('该邮箱未注册')
 
-import sys
-default_encoding = 'utf-8'
-if sys.getdefaultencoding() != default_encoding:
-    reload(sys)
 
-    sys.setdefaultencoding(default_encoding)
 
 
 
