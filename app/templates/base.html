@@ -13,56 +13,72 @@
 {% endblock %}
 
 {% block navbar %}
-<div class="navbar navbar-inverse" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for(main.index) }}">糗事百科</a>
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="logo" id="hd-logo">
+                <a href="/" style="background: url(&quot;http://www.qiushibaike.com/static/images/v2/week6.png&quot;)
+                no-repeat;"><h1>糗事百科</h1></a>
+            </div>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{ url_for('main.index') }}">糗事百科</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('main.index') }}">热门</a></li>
+                <li><a href="{{ url_for('main.pic') }}">图片</a></li>
+                <li><a href="{{ url_for('main.textnew') }}">文字</a></li>
+                <li><a href="{{ url_for('main.add') }}">投稿</a></li>
+                <li><a href="{{ url_for('main.pic') }}">小鸡炖蘑菇</a></li>
+                <li><a href="http://www.youliaodao.cn/">问答</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right ">
+                {% if current_user.is_authenticated %}
+                    <ul class="qiu_navbar_logined">
+                        <li><a href="{{ url_for('main.my.articles') }}">{{ current_user.name }}</a></li>
+                        <li><a href="{{ url_for('main.index') }}">登出</a></li>
+                    </ul>
+                {% else %}
+                    <li><a class="nav navbar-nav navbar-right btn btn-primary btn-lg" data-toggle="modal"
+                           data-target="#myModal" href="{{ url_for('auth.login') }}">登录/注册
+                    </a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-        <ul class="nav navbar-nav">
-            <li><a href="{{ url_for(main.index) }}">热门</a></li>
-            <li><a href="{{ url_for(#) }}">图片</a></li>
-            <li><a href="{{ url_for(main.text) }}">文字</a></li>
-            <li><a href="{{ url_for(edit_post) }}">投稿</a></li>
-            <li><a href="{{ url_for(main.topic) }}">小鸡炖蘑菇</a></li>
-            <li><a href="http://www.youliaodao.cn/">问答</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right ">
-            {% if current_user.is_authenticated %}
-                <ul class="qiu_navbar_logined">
-                    <li><a href="{{ url_for('main.my.articles') }}">{{ current_user.name }}</a></li>
-                    <li><a href="{{ url_for('main.index') }}">登出</a></li>
-                </ul>
-            {% else %}
-                <li><a class="login_signup_button" href="{{ url_for('auth.login') }}">登录/注册</a></li>
-            {% endif %}
-        </ul>
     </div>
-</div>
-<div class="cd-user-modal">
-<div class="cd-user-modal-container">
-    <div id="cd-login">
-        <form class="cd-form">
-            <!-- 登录表单 -->
-            <div class="cd-form-wrapper">
-                <input type="text" placeholder="姓名" required/>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">使用糗百账号登录</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="recipient-name" placeholder="昵称或邮箱" required/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="loginkey" placeholder="密码" required/>
+                        </div>
+                    </form>
+                    <a href="{{ url_for('auth.change_password') }}">忘记密码?</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">登录</button>
+                </div>
             </div>
-            <div class="cd-form-wrapper">
-                <input type="text" placeholder="手机号或邮箱" required/>
-            </div>
-            <div class="cd-form-wrapper">
-                <input type="text" placeholder="密码（不少于 6 位）" required/>
-            </div>
-            <div class="cd-form-wrapper">
-                <input type="text" placeholder="验证码" required/>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+{% endblock %}
 {% block content %}
-<div class="container">
-    {% block page_content %}
-    {% endblock %}
-</div>
+    <div class="container">
+        {% block page_content %}
+        {% endblock %}
+    </div>
+{% endblock %}
 
 {% block scripts %}
     {{ super() }}

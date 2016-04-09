@@ -1,0 +1,76 @@
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+{% extends "bootstrap/base.html" %}
+
+{% block title %}糗事百科{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">糗事百科</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="{{ url_for('main.index') }}">热门</a></li>
+            <li><a href="{{ url_for('main.index') }}">图片</a></li>
+            <li><a href="{{ url_for('main.index') }}">文字</a></li>
+            <li><a href="{{ url_for('main.edit_post') }}">投稿</a></li>
+            <li><a href="{{ url_for('main.topic') }}">小鸡炖蘑菇</a></li>
+            <li><a href="http://www.youliaodao.cn/">问答</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right ">
+            {% if current_user.is_authenticated %}
+                <ul class="qiu_navbar_logined">
+                    <li><a href="{{ url_for('main.my.articles') }}">{{ current_user.name }}</a></li>
+                    <li><a href="{{ url_for('main.index') }}">登出</a></li>
+                </ul>
+            {% else %}
+                <li><a class="btn btn-primary btn-lg" href="{{ url_for('auth.login') }}">登录/注册</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+<div class="modal fade" id="myModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="model-dialog">
+        <div class="modal-content">
+             <button type="button" class="close" data-dismiss="modal"
+               aria-hidden="true">×
+             </button>
+             <form class="cd-form">
+                <!-- 登录表单 -->
+                <div class="cd-form-wrapper">
+                    <input type="text" placeholder="姓名" required/>
+                </div>
+                <div class="cd-form-wrapper">
+                    <input type="text" placeholder="手机号或邮箱" required/>
+                </div>
+                <div class="cd-form-wrapper">
+                    <input type="text" placeholder="密码（不少于 6 位）" required/>
+                </div>
+                <div class="cd-form-wrapper">
+                    <input type="text" placeholder="验证码" required/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="container">
+    {% block page_content %}
+    {% endblock %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+{% endblock %}

@@ -18,6 +18,7 @@ class Config:
     QIUBAI_POSTS_PER_PAGE = 20
     QIUBAI_FOLLOWERS_PER_PAGE = 50
     QIUBAI_COMMENTS_PER_PAGE = 30
+    QIUBAI_SLOW_DB_QUERY_TIME = 0.5
 
     @staticmethod
     def init_app(app):

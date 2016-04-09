@@ -1,5 +1,7 @@
 from datetime import datetime
 import hashlib
+import markdown, bleach
+from .exceptions import  ValidationError
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app, request, url_for
@@ -11,7 +13,6 @@ if sys.getdefaultencoding() != default_encoding:
     reload(sys)
 
     sys.setdefaultencoding(default_encoding)
-
 
 class Permission:
     LIKE = 0x01
@@ -67,7 +68,6 @@ class User(db.Model):
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
     likes = db.relationship('Like', backref='author', lazy='dynamic')
 
-
     @staticmethod
     def generate_fake(count=100):
         from sqlalchemy.exc import IntegrityError
@@ -97,18 +97,6 @@ class User(db.Model):
                 user.follow(user)
                 db.session.add(user)
                 db.session.commit()
-
-    def __init__(self, **kwargs):
-        super(User, self).__init__(**kwargs)
-        if self.role is None:
-            if self.email == current_app.config['FLASKY_ADMIN']:
-                self.role = Role.query.filter_by(permissions=0xff).first()
-            if self.role is None:
-                self.role = Role.query.filter_by(default=True).first()
-        if self.email is not None and self.avatar_hash is None:
-            self.avatar_hash = hashlib.md5(
-                self.email.encode('utf-8')).hexdigest()
-        self.followed.append(Follow(followed=self))
 
     @property
     def password(self):
@@ -197,18 +185,6 @@ class User(db.Model):
         return '{url}/{hash}?s={size}&d={default}&r={rating}'.format(
             url=url, hash=hash, size=size, default=default, rating=rating)
 
-
-
-    def follow(self, user):
-        if not self.is_following(user):
-            f = Follow(follower=self, followed=user)
-            db.session.add(f)
-
-    def unfollow(self, user):
-        f = self.followed.filter_by(followed_id=user.id).first()
-        if f:
-            db.session.delete(f)
-
     def is_following(self, user):
         return self.followed.filter_by(
             followed_id=user.id).first() is not None
@@ -217,10 +193,6 @@ class User(db.Model):
         return self.followers.filter_by(
             follower_id=user.id).first() is not None
 
-    @property
-    def followed_posts(self):
-        return Post.query.join(Follow, Follow.followed_id == Post.author_id)\
-            .filter(Follow.follower_id == self.id)
 
     def to_json(self):
         json_user = {
@@ -277,7 +249,7 @@ class Post(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
     likes = db.relationship('Like', backref='post', lazy='dynamic')
-    timestamp2 = db.Column(db.DateTime, index=True, default=datetime.hour)
+    timestamp2 = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     @staticmethod
     def generate_fake(count=100):

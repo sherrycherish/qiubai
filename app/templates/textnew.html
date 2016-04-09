@@ -7,9 +7,8 @@
 {% block page_content %}
 <div class="post-tabs">
     <ul class="nav nav-tabs ">
-        <li{% if eight_hours %} class="active "{% endif %}><a href="{{ url_for('.index') }}">8小时</a></li>
-        <li{% if hot %} class="active"{% endif %}><a href="{{ url_for('.hot') }}">24小时</a></li>
-        <li{% if cross %} class="active"{% endif %}><a href="{{ url_for('.history') }}">穿越</a></li>
+        <li{% if eight_hours %} class="active "{% endif %}><a href="{{ url_for('.text') }}">最热</a></li>
+        <li{% if hot %} class="active"{% endif %}><a href="{{ url_for('.textrank') }}">最新</a></li>
     </ul>
     {% include '_posts.html' %}
 </div>

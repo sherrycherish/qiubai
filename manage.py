@@ -8,7 +8,7 @@ from flask.ext.migrate import Migrate, MigrateCommand
 
 
 
-app = create_app(os.getenv('SHERRY_BLOG_CONFIG') or 'default')
+app = create_app(os.getenv('QIUBAI_CONFIG') or 'default')
 manager = Manager(app)
 migrate = Migrate(app, db)
 
