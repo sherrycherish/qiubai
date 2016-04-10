@@ -1,34 +1,33 @@
-<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
 {% extends "bootstrap/base.html" %}
 
 {% block title %}糗事百科{% endblock %}
 
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 {% block head %}
-    {{ super() }}
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon') }}" type="image/x-icon">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="stylesheet"  href="{{ url_for('static', filename='styles.css') }}" type="text/css">
 {% endblock %}
 
 {% block navbar %}
-    <div class="navbar navbar-inverse" role="navigation">
+    <div class="navbar navbar-inverse qiu_navbar" role="navigation">
         <div class="container-fluid">
-            <div class="logo" id="hd-logo">
-                <a href="/" style="background: url(&quot;http://www.qiushibaike.com/static/images/v2/week6.png&quot;)
-                no-repeat;"><h1>糗事百科</h1></a>
-            </div>
+
             <div class="navbar-header">
-                <a class="navbar-brand" href="{{ url_for('main.index') }}">糗事百科</a>
+                <a class="navbar-brand logo" >
+                    <img src="" alt="" id="images">
+                </a>
             </div>
-            <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('main.index') }}">热门</a></li>
-                <li><a href="{{ url_for('main.pic') }}">图片</a></li>
-                <li><a href="{{ url_for('main.textnew') }}">文字</a></li>
-                <li><a href="{{ url_for('main.add') }}">投稿</a></li>
-                <li><a href="{{ url_for('main.pic') }}">小鸡炖蘑菇</a></li>
-                <li><a href="http://www.youliaodao.cn/">问答</a></li>
+            <ul class="nav navbar-nav qiu_top">
+                <li ><a class="qiu_top1" href="{{ url_for('main.index') }}">热门</a></li>
+                <li ><a class="qiu_top1" href="{{ url_for('main.pic') }}">图片</a></li>
+                <li ><a class="qiu_top1" href="{{ url_for('main.textnew') }}">文字</a></li>
+                <li ><a class="qiu_top1" href="{{ url_for('main.add') }}">投稿</a></li>
+                <li ><a class="qiu_top1" href="{{ url_for('main.pic') }}">小鸡炖蘑菇</a></li>
+                <li ><a class="qiu_top1" href="http://www.youliaodao.cn/">问答</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right ">
                 {% if current_user.is_authenticated %}
@@ -37,7 +36,7 @@
                         <li><a href="{{ url_for('main.index') }}">登出</a></li>
                     </ul>
                 {% else %}
-                    <li><a class="nav navbar-nav navbar-right btn btn-primary btn-lg" data-toggle="modal"
+                    <li><a class="nav navbar-nav navbar-right btn btn-primary btn-lg login_top" data-toggle="modal"
                            data-target="#myModal" href="{{ url_for('auth.login') }}">登录/注册
                     </a>
                     </li>
@@ -45,7 +44,7 @@
             </ul>
         </div>
     </div>
-    <!-- Modal -->
+    <!-- 悬浮登录框 -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -79,8 +78,20 @@
         {% endblock %}
     </div>
 {% endblock %}
-
 {% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
+<script>
+    (function () {
+        console.log('change the src attribute');
+        var test = "../static/logo/" + new Date().getDay()+ ".png";
+        var x = document.getElementById("images");
+        console.log(test);
+        x.setAttribute("src", "../static/logo/" + new Date().getDay()+ ".png");
+    })();
+</script>
+{{ super() }}
+{{ moment.include_moment() }}
+
 {% endblock %}
+
+
+

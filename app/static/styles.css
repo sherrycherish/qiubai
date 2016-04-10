@@ -243,3 +243,25 @@ div.flask-pagedown-preview h3 {
 .table.followers tr {
     border-bottom: 1px solid #e0e0e0;
 }
+.qiu_top {
+    vertical-align: middle !important;
+    margin-top: auto !important;
+    padding: 0.5cm 0cm 1cm 1cm  !important;
+}
+.login_top{
+    margin: 0.4cm 2cm -0.5cm 1cm !important;
+    background-color: #f2dede !important;
+    border: none;
+}
+.logo{
+    margin: -0.36cm 0cm 0.58cm 1.4cm !important;
+}
+.qiu_top1{
+    font-size: 170%;
+    font-family: fantasy;
+}
+.qiu_navbar{
+    height: 2.16cm;
+    background-color: #f2dede;
+    border: none;
+}
