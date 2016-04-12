@@ -1,6 +1,12 @@
-#coding: utf-8
+#-*- coding:utf-8 -*-
 from flask import render_template, request, jsonify
 from . import main
+import sys
+default_encoding = 'utf-8'
+if sys.getdefaultencoding() != default_encoding:
+    reload(sys)
+
+    sys.setdefaultencoding(default_encoding)
 
 
 @main.app_errorhandler(403)
@@ -33,9 +39,3 @@ def internal_server_error(e):
     return render_template('500.html'), 500
 
 
-import sys
-default_encoding = 'utf-8'
-if sys.getdefaultencoding() != default_encoding:
-    reload(sys)
-
-    sys.setdefaultencoding(default_encoding)

@@ -1,8 +1,8 @@
-#coding: utf-8
+#-*- coding:utf-8 -*-
 from flask.ext.wtf import Form
 from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
     SubmitField
-from wtforms.validators import Required, Length, Email, Regexp
+from wtforms.validators import InputRequired, Length, Email, Regexp
 from wtforms import ValidationError
 from flask.ext.pagedown.fields import PageDownField
 from ..models import Role, User
@@ -15,17 +15,20 @@ if sys.getdefaultencoding() != default_encoding:
     sys.setdefaultencoding(default_encoding)
 
 
-class PostForm(Form):
+class Add(Form):
+    """投稿"""
     body = PageDownField("分享一件新鲜事...")
     submit = SubmitField('发表')
 
 
 class CommentForm(Form):
+    """评论"""
     body = StringField('写下你的评论:')
     submit = SubmitField('发表')
 
 
 class EditProfileForm(Form):
+    """编辑个人主页"""
     name = StringField('Real name', validators=[Length(0, 64)])
     location = StringField('Location', validators=[Length(0, 64)])
     about_me = TextAreaField('About me')
@@ -33,10 +36,11 @@ class EditProfileForm(Form):
 
 
 class EditProfileAdminForm(Form):
-    email = StringField('Email', validators=[Required(), Length(1, 64),
+    """编辑管理员主页"""
+    email = StringField('Email', validators=[InputRequired(), Length(1, 64),
                                              Email()])
     username = StringField('Username', validators=[
-        Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
+        InputRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
                                           'Usernames must have only letters, '
                                           'numbers, dots or underscores')])
     confirmed = BooleanField('Confirmed')

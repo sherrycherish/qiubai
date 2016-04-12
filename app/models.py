@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 from datetime import datetime
 import hashlib
 import markdown, bleach
@@ -14,7 +15,11 @@ if sys.getdefaultencoding() != default_encoding:
 
     sys.setdefaultencoding(default_encoding)
 
+
 class Permission:
+    """
+    定义权限常量
+    """
     LIKE = 0x01
     COMMENT = 0x02
     WRITE_ARTICLES = 0x04
@@ -23,6 +28,9 @@ class Permission:
 
 
 class Role(db.Model):
+    """
+    定义角色常量
+    """
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
@@ -56,6 +64,9 @@ class Role(db.Model):
 
 
 class User(db.Model):
+    """
+    用户模型
+    """
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(64), unique=True, index=True)
@@ -89,7 +100,7 @@ class User(db.Model):
                 db.session.commit()
             except IntegrityError:
                 db.session.rollback()
-
+    
     @staticmethod
     def add_self_follows():
         for user in User.query.all():
@@ -193,7 +204,6 @@ class User(db.Model):
         return self.followers.filter_by(
             follower_id=user.id).first() is not None
 
-
     def to_json(self):
         json_user = {
             'url': url_for('api.get_post', id=self.id, _external=True),
@@ -226,6 +236,9 @@ class User(db.Model):
 
 
 class AnonymousUser(AnonymousUserMixin):
+    """
+    匿名用户权限
+    """
     def can(self, permissions):
         return False
 
@@ -241,6 +254,7 @@ def load_user(user_id):
 
 
 class Post(db.Model):
+    """博文模型"""
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
@@ -301,6 +315,9 @@ db.event.listen(Post.body, 'set', Post.on_changed_body)
 
 
 class Comment(db.Model):
+    """
+    评论模型
+    """
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
@@ -311,6 +328,9 @@ class Comment(db.Model):
 
 
 class Like(db.Model):
+    """
+    点赞模型
+    """
     __tablename__ = 'likes'
     id = db.Column(db.Integer, primary_key=True)
     like_body = db.Column(db.Boolean, index=True, default=False)

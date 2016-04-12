@@ -249,10 +249,16 @@ div.flask-pagedown-preview h3 {
     padding: 0.5cm 0cm 1cm 1cm  !important;
 }
 .login_top{
-    margin: 0.4cm 2cm -0.5cm 1cm !important;
+    margin: 0.4cm 0cm -0.5cm 1cm !important;
     background-color: #f2dede !important;
     border: none;
 }
+.login_top2 {
+    background-color: #f2dede !important;
+    border: none;
+    margin: 0.07cm 2.2cm 4cm 0.1cm !important;
+}
+
 .logo{
     margin: -0.36cm 0cm 0.58cm 1.4cm !important;
 }

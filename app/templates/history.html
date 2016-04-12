@@ -7,8 +7,9 @@
 {% block page_content %}
 <div class="post-tabs">
     <ul class="nav nav-tabs ">
-        <li ><a href="{{ url_for('main.text') }}">最热</a></li>
-        <li class="active" ><a href="{{ url_for('main.textnew') }}">最新</a></li>
+        <li><a href="{{ url_for('.index') }}">8小时</a></li>
+        <li><a href="{{ url_for('.hot') }}">24小时</a></li>
+        <li class="active "><a href="{{ url_for('.history') }}">穿越</a></li>
     </ul>
     {% include '_posts.html' %}
 </div>
