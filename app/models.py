@@ -100,7 +100,7 @@ class User(db.Model):
                 db.session.commit()
             except IntegrityError:
                 db.session.rollback()
-    
+
     @staticmethod
     def add_self_follows():
         for user in User.query.all():
