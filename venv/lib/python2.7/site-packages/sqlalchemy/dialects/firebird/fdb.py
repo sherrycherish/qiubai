@@ -73,7 +73,6 @@ from ... import util
 
 
 class FBDialect_fdb(FBDialect_kinterbasdb):
-
     def __init__(self, enable_rowcount=True,
                  retaining=False, **kwargs):
         super(FBDialect_fdb, self).__init__(
@@ -114,5 +113,6 @@ class FBDialect_fdb(FBDialect_kinterbasdb):
         version = fbconn.db_info(isc_info_firebird_version)
 
         return self._parse_version_info(version)
+
 
 dialect = FBDialect_fdb

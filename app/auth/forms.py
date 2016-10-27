@@ -1,10 +1,11 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import InputRequired, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from ..models import User
 import sys
+
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)
@@ -28,7 +29,7 @@ class RegistrationForm(Form):
     email = StringField('邮箱', validators=[InputRequired(), Length(1, 64), Email()])
     username = StringField('用户名', validators=[InputRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
                                                                                      'Usernames must have only letters,'
-                                                                                    'numbers, dots or underscores')])
+                                                                                     'numbers, dots or underscores')])
     password = PasswordField('密码', validators=[InputRequired(), EqualTo('confirm_password', message='密码必须一致')])
     confirm_password = PasswordField('确认密码', validators=[InputRequired()])
     submit = SubmitField('注册')
@@ -65,7 +66,7 @@ class PasswordResetForm(Form):
     """
     重置密码表
     """
-    email = SubmitField('邮箱', validators=[InputRequired(), Length(1,64),Email()])
+    email = SubmitField('邮箱', validators=[InputRequired(), Length(1, 64), Email()])
     password = PasswordField('新密码', validators=[
         InputRequired(), EqualTo('confirm_password', message='密码必须一致')])
     confirm_password = PasswordField('确认新密码', validators=[InputRequired()])
@@ -74,9 +75,3 @@ class PasswordResetForm(Form):
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first() is None:
             raise ValidationError('该邮箱未注册')
-
-
-
-
-
-

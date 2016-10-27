@@ -43,6 +43,7 @@ def _compile(element, compiler, **kw):
     else:
         return compiler.process(cast(element.bindvalue, Unicode), **kw)
 
+
 schemata = Table("SCHEMATA", ischema,
                  Column("CATALOG_NAME", CoerceUnicode, key="catalog_name"),
                  Column("SCHEMA_NAME", CoerceUnicode, key="schema_name"),

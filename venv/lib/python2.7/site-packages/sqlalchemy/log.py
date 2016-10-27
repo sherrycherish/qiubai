@@ -92,7 +92,7 @@ class InstanceLogger(object):
         # if echo flag is enabled and no handlers,
         # add a handler to the list
         if self._echo_map[echo] <= logging.INFO \
-           and not self.logger.handlers:
+                and not self.logger.handlers:
             _add_default_handler(self.logger)
 
     #

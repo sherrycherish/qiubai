@@ -180,6 +180,7 @@ def count_from_n_factory(start):
 
     def f(index, collection):
         return index + start
+
     try:
         f.__name__ = 'count_from_%i' % start
     except TypeError:
@@ -311,6 +312,7 @@ class OrderingList(list):
         """Append without any ordering behavior."""
 
         super(OrderingList, self).append(entity)
+
     _raw_append = collection.adds(1)(_raw_append)
 
     def insert(self, index, entity):

@@ -1,14 +1,18 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 from datetime import datetime
 import hashlib
 import markdown, bleach
-from .exceptions import  ValidationError
+from .exceptions import ValidationError
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app, request, url_for
 from flask.ext.login import UserMixin, AnonymousUserMixin
 from . import db, login_manager
 import sys
+import os
+from flask import Flask, request, redirect, url_for
+from werkzeug import secure_filename
+
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)
@@ -177,7 +181,7 @@ class User(db.Model):
 
     def can(self, permissions):
         return self.role is not None and \
-            (self.role.permissions & permissions) == permissions
+               (self.role.permissions & permissions) == permissions
 
     def is_administrator(self):
         return self.can(Permission.ADMINISTER)
@@ -239,11 +243,13 @@ class AnonymousUser(AnonymousUserMixin):
     """
     匿名用户权限
     """
+
     def can(self, permissions):
         return False
 
     def is_administrator(self):
         return False
+
 
 login_manager.anonymous_user = AnonymousUser
 

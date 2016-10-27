@@ -19,7 +19,6 @@ from .base import PGDialect, PGExecutionContext
 
 
 class PGExecutionContext_zxjdbc(PGExecutionContext):
-
     def create_cursor(self):
         cursor = self._dbapi_connection.cursor()
         cursor.datahandler = self.dialect.DataHandler(cursor.datahandler)
@@ -42,5 +41,6 @@ class PGDialect_zxjdbc(ZxJDBCConnector, PGDialect):
     def _get_server_version_info(self, connection):
         parts = connection.connection.dbversion.split('.')
         return tuple(int(x) for x in parts)
+
 
 dialect = PGDialect_zxjdbc

@@ -60,4 +60,5 @@ class SimpleUpdateDeleteTest(fixtures.TablesTest):
             ]
         )
 
-__all__ = ('SimpleUpdateDeleteTest', )
+
+__all__ = ('SimpleUpdateDeleteTest',)

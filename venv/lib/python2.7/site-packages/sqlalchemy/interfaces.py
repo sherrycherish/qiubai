@@ -187,9 +187,7 @@ class ConnectionProxy(object):
 
     @classmethod
     def _adapt_listener(cls, self, listener):
-
         def adapt_execute(conn, clauseelement, multiparams, params):
-
             def execute_wrapper(clauseelement, *multiparams, **params):
                 return clauseelement, multiparams, params
 
@@ -201,12 +199,11 @@ class ConnectionProxy(object):
 
         def adapt_cursor_execute(conn, cursor, statement,
                                  parameters, context, executemany):
-
             def execute_wrapper(
-                cursor,
-                statement,
-                parameters,
-                context,
+                    cursor,
+                    statement,
+                    parameters,
+                    context,
             ):
                 return statement, parameters
 
@@ -217,7 +214,7 @@ class ConnectionProxy(object):
                 parameters,
                 context,
                 executemany,
-                )
+            )
 
         event.listen(self, 'before_cursor_execute', adapt_cursor_execute)
 
@@ -225,7 +222,6 @@ class ConnectionProxy(object):
             pass
 
         def adapt_listener(fn):
-
             def go(conn, *arg, **kw):
                 fn(conn, do_nothing_callback, *arg, **kw)
 

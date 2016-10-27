@@ -68,6 +68,8 @@ def py_fallback():
                 return [multiparams]
 
     return locals()
+
+
 try:
     from sqlalchemy.cutils import _distill_params
 except ImportError:

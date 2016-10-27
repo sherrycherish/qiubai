@@ -63,7 +63,6 @@ from ..engine import Engine
 from ..util import pickle, byte_buffer, b64encode, b64decode, text_type
 import re
 
-
 __all__ = ['Serializer', 'Deserializer', 'dumps', 'loads']
 
 
@@ -80,12 +79,12 @@ def Serializer(*args, **kw):
             id = "mapper:" + b64encode(pickle.dumps(obj.class_))
         elif isinstance(obj, MapperProperty) and not obj.parent.non_primary:
             id = "mapperprop:" + b64encode(pickle.dumps(obj.parent.class_)) + \
-                ":" + obj.key
+                 ":" + obj.key
         elif isinstance(obj, Table):
             id = "table:" + text_type(obj.key)
         elif isinstance(obj, Column) and isinstance(obj.table, Table):
             id = "column:" + \
-                text_type(obj.table.key) + ":" + text_type(obj.key)
+                 text_type(obj.table.key) + ":" + text_type(obj.key)
         elif isinstance(obj, Session):
             id = "session:"
         elif isinstance(obj, Engine):
@@ -96,6 +95,7 @@ def Serializer(*args, **kw):
 
     pickler.persistent_id = persistent_id
     return pickler
+
 
 our_ids = re.compile(
     r'(mapperprop|mapper|table|column|session|attribute|engine):(.*)')
@@ -142,6 +142,7 @@ def Deserializer(file, metadata=None, scoped_session=None, engine=None):
                 return get_engine()
             else:
                 raise Exception("Unknown token: %s" % type_)
+
     unpickler.persistent_load = persistent_load
     return unpickler
 

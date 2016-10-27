@@ -1,10 +1,10 @@
-#-*- coding:utf-8 -*-
-from flask import render_template, redirect, url_for, abort, flash, request,\
+# -*- coding:utf-8 -*-
+from flask import render_template, redirect, url_for, abort, flash, request, \
     current_app, make_response
 from flask.ext.login import login_required, current_user
 from flask.ext.sqlalchemy import get_debug_queries
 from . import main
-from .forms import EditProfileForm, EditProfileAdminForm, Add,\
+from .forms import EditProfileForm, EditProfileAdminForm, Add, \
     CommentForm
 from .. import db
 from ..models import Permission, Role, User, Post, Comment, Like
@@ -49,7 +49,8 @@ def index():
     offset8 = datetime.datetime.now() + datetime.timedelta(hours=-8)
     offset24 = datetime.datetime.now() + datetime.timedelta(days=-1)
     query = db.session.query(Post).filter(Post.timestamp2 >= offset8)
-    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page, per_page=current_app.config['QIUBAI_POSTS_PER_PAGE'], error_out=False)
+    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page, per_page=current_app.config[
+        'QIUBAI_POSTS_PER_PAGE'], error_out=False)
     posts = pagination.items
     return render_template('index.html', posts=posts, pagination=pagination)
 
@@ -60,7 +61,8 @@ def hot():
     offset8 = datetime.datetime.now() + datetime.timedelta(hours=-8)
     offset24 = datetime.datetime.now() + datetime.timedelta(days=-1)
     query = db.session.query(Post).filter(Post.timestamp2 >= offset24)
-    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page, per_page=current_app.config['QIUBAI_POSTS_PER_PAGE'], error_out=False)
+    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page, per_page=current_app.config[
+        'QIUBAI_POSTS_PER_PAGE'], error_out=False)
     posts = pagination.items
     return render_template('hot.html', posts=posts, pagination=pagination)
 
@@ -71,7 +73,8 @@ def history():
     offset8 = datetime.datetime.now() + datetime.timedelta(hours=-8)
     offset24 = datetime.datetime.now() + datetime.timedelta(days=-1)
     query = db.session.query(Post).filter(Post.timestamp2 >= offset24)
-    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page, per_page=current_app.config['QIUBAI_POSTS_PER_PAGE'], error_out=False)
+    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page, per_page=current_app.config[
+        'QIUBAI_POSTS_PER_PAGE'], error_out=False)
     posts = pagination.items
     return render_template('history.html', posts=posts, pagination=pagination)
 
@@ -93,11 +96,11 @@ def edit_profile():
     return render_template('edit_profile.html', form=form)
 
 
-@main.route('/post/<int:id>', methods =['GET', 'POST'])
+@main.route('/post/<int:id>', methods=['GET', 'POST'])
 def post(id):
     post = Post.query.get_or_404(id)
     form = CommentForm()
-    post.like_count = Like.query.get(Like.like_body==True).count()
+    post.like_count = Like.query.get(Like.like_body == True).count()
     like = Like.query.get()
     if form.validate_on_submit():
         comment = Comment(body=form.body.data,
@@ -109,7 +112,7 @@ def post(id):
     page = request.args.get('page', 1, type=int)
     if page == -1:
         page = (post.comments.count() - 1) // \
-            current_app.config['SHERRY_BLOG_PER_PAGE'] + 1
+               current_app.config['SHERRY_BLOG_PER_PAGE'] + 1
     pagination = post.comments.order_by(Comment.timestamp.asc()).paginate(
         page, per_page=current_app.config['SHERRY_BLOG_PER_PAGE'],
         error_out=False)
@@ -140,7 +143,7 @@ def add():
                     author=current_user._get_current_object())
         db.session.add(post)
         return redirect(url_for('main.index'))
-    return render_template('add.html',form=form)
+    return render_template('add.html', form=form)
 
 
 @main.route('/edit-profile/<int:id>', methods=['GET', 'POST'])
@@ -169,10 +172,12 @@ def pic():
     page = request.args.get('page', 1, type=int)
 
     pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page,
-                                                                per_page=current_app.config['QIUBAI_POSTS_PER_PAGE'],
-                                                                error_out=False)
+                                                                     per_page=current_app.config[
+                                                                         'QIUBAI_POSTS_PER_PAGE'],
+                                                                     error_out=False)
     posts = pagination.items
     return render_template('pic.html', posts=posts, pagination=pagination)
+
 
 @main.route('/textnew', methods=['GET', 'POST'])
 def textnew():
@@ -203,8 +208,9 @@ def imgrank():
     page = request.args.get('page', 1, type=int)
 
     pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page,
-                                                                per_page=current_app.config['QIUBAI_POSTS_PER_PAGE'],
-                                                                error_out=False)
+                                                                     per_page=current_app.config[
+                                                                         'QIUBAI_POSTS_PER_PAGE'],
+                                                                     error_out=False)
     posts = pagination.items
     return render_template('imgrank.html', posts=posts, pagination=pagination)
 
@@ -229,3 +235,15 @@ def moderate_disable(id):
     db.session.add(comment)
     return redirect(url_for('.moderate',
                             page=request.args.get('page', 1, type=int)))
+
+
+@main.route('/upload', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.MODERATE_COMMENTS)
+def upload_file():
+    if request.method == 'POST':
+        file = request.file['file']
+        if file and allowed_file(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('uploaded_file',
+                                    filename=filename))

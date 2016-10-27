@@ -48,7 +48,6 @@ def _is_dev_environment():
 
 
 class MySQLDialect_gaerdbms(MySQLDialect_mysqldb):
-
     @classmethod
     def dbapi(cls):
 
@@ -98,5 +97,6 @@ class MySQLDialect_gaerdbms(MySQLDialect_mysqldb):
         code = match.group(1) or match.group(2) if match else None
         if code:
             return int(code)
+
 
 dialect = MySQLDialect_gaerdbms

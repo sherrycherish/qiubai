@@ -1,6 +1,6 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 from flask.ext.wtf import Form
-from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
+from wtforms import StringField, TextAreaField, BooleanField, SelectField, \
     SubmitField
 from wtforms.validators import InputRequired, Length, Email, Regexp
 from wtforms import ValidationError
@@ -8,6 +8,7 @@ from flask.ext.pagedown.fields import PageDownField
 from ..models import Role, User
 
 import sys
+
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)
@@ -41,8 +42,8 @@ class EditProfileAdminForm(Form):
                                              Email()])
     username = StringField('Username', validators=[
         InputRequired(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
-                                          'Usernames must have only letters, '
-                                          'numbers, dots or underscores')])
+                                               'Usernames must have only letters, '
+                                               'numbers, dots or underscores')])
     confirmed = BooleanField('Confirmed')
     role = SelectField('Role', coerce=int)
     name = StringField('Real name', validators=[Length(0, 64)])
@@ -65,9 +66,3 @@ class EditProfileAdminForm(Form):
         if field.data != self.user.username and \
                 User.query.filter_by(username=field.data).first():
             raise ValidationError('Username already in use.')
-
-
-
-
-
-

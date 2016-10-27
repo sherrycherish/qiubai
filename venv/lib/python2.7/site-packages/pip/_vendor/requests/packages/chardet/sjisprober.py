@@ -72,7 +72,7 @@ class SJISProber(MultiByteCharSetProber):
                     self._mDistributionAnalyzer.feed(self._mLastChar, charLen)
                 else:
                     self._mContextAnalyzer.feed(aBuf[i + 1 - charLen:i + 3
-                                                     - charLen], charLen)
+                                                                     - charLen], charLen)
                     self._mDistributionAnalyzer.feed(aBuf[i - 1:i + 1],
                                                      charLen)
 
@@ -80,7 +80,7 @@ class SJISProber(MultiByteCharSetProber):
 
         if self.get_state() == constants.eDetecting:
             if (self._mContextAnalyzer.got_enough_data() and
-               (self.get_confidence() > constants.SHORTCUT_THRESHOLD)):
+                    (self.get_confidence() > constants.SHORTCUT_THRESHOLD)):
                 self._mState = constants.eFoundIt
 
         return self.get_state()

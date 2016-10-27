@@ -51,6 +51,7 @@ class _kinterbasdb_numeric(object):
                 return str(value)
             else:
                 return value
+
         return process
 
 
@@ -180,5 +181,6 @@ class FBDialect_kinterbasdb(FBDialect):
                     'connection shutdown' in msg)
         else:
             return False
+
 
 dialect = FBDialect_kinterbasdb

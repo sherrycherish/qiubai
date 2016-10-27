@@ -34,6 +34,7 @@ class _cymysqlBIT(BIT):
                     v = v << 8 | i
                 return v
             return value
+
         return process
 
 
@@ -76,12 +77,13 @@ class MySQLDialect_cymysql(MySQLDialect_mysqldb):
     def is_disconnect(self, e, connection, cursor):
         if isinstance(e, self.dbapi.OperationalError):
             return self._extract_error_code(e) in \
-                (2006, 2013, 2014, 2045, 2055)
+                   (2006, 2013, 2014, 2045, 2055)
         elif isinstance(e, self.dbapi.InterfaceError):
             # if underlying connection is closed,
             # this is the error you get
             return True
         else:
             return False
+
 
 dialect = MySQLDialect_cymysql

@@ -1,13 +1,14 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 from flask import render_template, redirect, request, url_for, flash
 from flask.ext.login import login_user, logout_user, login_required, current_user
 from . import auth
 from .. import db
 from ..models import User
 from ..email import send_email
-from .forms import LoginForm, RegistrationForm, ChangePasswordForm,\
+from .forms import LoginForm, RegistrationForm, ChangePasswordForm, \
     PasswordForgotForm, PasswordResetForm
 import sys
+
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)
@@ -75,5 +76,3 @@ def forgot_password():
         flash('请查看您的邮箱, 点击链接确认修改密码')
         return redirect(url_for('main.index'))
     return render_template('auth/forgot_password.html', form=form)
-
-

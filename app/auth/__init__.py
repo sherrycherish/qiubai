@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 from flask import Blueprint
 
 auth = Blueprint('auth', __name__)
@@ -6,6 +6,7 @@ auth = Blueprint('auth', __name__)
 from . import views
 
 import sys
+
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)

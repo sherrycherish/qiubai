@@ -12,7 +12,6 @@ _repr_stack = set()
 
 
 class BasicEntity(object):
-
     def __init__(self, **kw):
         for key, value in kw.items():
             setattr(self, key, value)
@@ -30,11 +29,11 @@ class BasicEntity(object):
         finally:
             _repr_stack.remove(id(self))
 
+
 _recursion_stack = set()
 
 
 class ComparableEntity(BasicEntity):
-
     def __hash__(self):
         return hash(self.__class__)
 

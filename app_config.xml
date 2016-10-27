@@ -1,0 +1,9 @@
+<uwsgi>
+<pythonpath>/users/sherry/PycharmProjects/qiubai</pythonpath>
+<module>manage</module>
+<callable>manage</callable>
+<socket>104.251.232.227</socket>
+<master/>
+<processes>4</processes>
+<memory-report/>
+</uwsgi>

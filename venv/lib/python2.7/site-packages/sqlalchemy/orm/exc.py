@@ -38,6 +38,7 @@ class StaleDataError(sa_exc.SQLAlchemyError):
 
     """
 
+
 ConcurrentModificationError = StaleDataError
 
 
@@ -117,11 +118,12 @@ class ObjectDeletedError(sa_exc.InvalidRequestError):
     object.
 
     """
+
     @util.dependencies("sqlalchemy.orm.base")
     def __init__(self, base, state, msg=None):
         if not msg:
-            msg = "Instance '%s' has been deleted, or its "\
-                "row is otherwise not present." % base.state_str(state)
+            msg = "Instance '%s' has been deleted, or its " \
+                  "row is otherwise not present." % base.state_str(state)
 
         sa_exc.InvalidRequestError.__init__(self, msg)
 

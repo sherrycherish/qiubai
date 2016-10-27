@@ -11,7 +11,7 @@ base.dialect = fdb.dialect
 
 from sqlalchemy.dialects.firebird.base import \
     SMALLINT, BIGINT, FLOAT, FLOAT, DATE, TIME, \
-    TEXT, NUMERIC, FLOAT, TIMESTAMP, VARCHAR, CHAR, BLOB,\
+    TEXT, NUMERIC, FLOAT, TIMESTAMP, VARCHAR, CHAR, BLOB, \
     dialect
 
 __all__ = (

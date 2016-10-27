@@ -33,6 +33,7 @@ class MSDateTime_adodbapi(MSDateTime):
             if type(value) is datetime.date:
                 return datetime.datetime(value.year, value.month, value.day)
             return value
+
         return process
 
 
@@ -75,6 +76,7 @@ class MSDialect_adodbapi(MSDialect):
 
     def is_disconnect(self, e, connection, cursor):
         return isinstance(e, self.dbapi.adodbapi.DatabaseError) and \
-            "'connection failure'" in str(e)
+               "'connection failure'" in str(e)
+
 
 dialect = MSDialect_adodbapi

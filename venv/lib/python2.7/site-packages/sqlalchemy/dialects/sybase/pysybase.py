@@ -35,7 +35,6 @@ class _SybNumeric(sqltypes.Numeric):
 
 
 class SybaseExecutionContext_pysybase(SybaseExecutionContext):
-
     def set_ddl_autocommit(self, dbapi_connection, value):
         if value:
             # call commit() on the Sybase connection directly,
@@ -98,5 +97,6 @@ class SybaseDialect_pysybase(SybaseDialect):
                     'Invalid cursor state' in msg)
         else:
             return False
+
 
 dialect = SybaseDialect_pysybase

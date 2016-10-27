@@ -32,6 +32,7 @@ in a forwards-compatible way.
 """
 
 from . import util, exc
+
 _registrars = util.defaultdict(list)
 
 
@@ -67,8 +68,8 @@ def inspect(subject, raiseerr=True):
         reg = ret = None
 
     if raiseerr and (
-            reg is None or ret is None
-            ):
+                    reg is None or ret is None
+    ):
         raise exc.NoInspectionAvailable(
             "No inspection system is "
             "available for object of type %s" %
@@ -85,6 +86,7 @@ def _inspects(*types):
                     "registered" % type_)
             _registrars[type_] = fn_or_cls
         return fn_or_cls
+
     return decorate
 
 

@@ -15,7 +15,6 @@ from jinja2.testsuite import JinjaTestCase
 from jinja2 import Environment, DictLoader
 from jinja2.exceptions import TemplateNotFound, TemplatesNotFound
 
-
 test_env = Environment(loader=DictLoader(dict(
     module='{% macro test() %}[{{ foo }}|{{ bar }}]{% endmacro %}',
     header='[{{ foo }}|{{ 23 }}]',
@@ -25,7 +24,6 @@ test_env.globals['bar'] = 23
 
 
 class ImportsTestCase(JinjaTestCase):
-
     def test_context_imports(self):
         t = test_env.from_string('{% import "module" as m %}{{ m.test() }}')
         assert t.render(foo=42) == '[|23]'
@@ -63,7 +61,6 @@ class ImportsTestCase(JinjaTestCase):
 
 
 class IncludesTestCase(JinjaTestCase):
-
     def test_context_include(self):
         t = test_env.from_string('{% include "header" %}')
         assert t.render(foo=42) == '[42|23]'

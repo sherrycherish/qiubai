@@ -1,5 +1,3 @@
-
-
 from .. import fixtures, config, util
 from ..config import requirements
 from ..assertions import eq_
@@ -62,4 +60,5 @@ class TableDDLTest(fixtures.TestBase):
         )
         self._simple_roundtrip(table)
 
-__all__ = ('TableDDLTest', )
+
+__all__ = ('TableDDLTest',)

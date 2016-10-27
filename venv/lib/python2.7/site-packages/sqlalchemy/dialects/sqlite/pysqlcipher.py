@@ -95,7 +95,7 @@ class SQLiteDialect_pysqlcipher(SQLiteDialect_pysqlite):
             self.pragmas
         )
 
-        conn = super(SQLiteDialect_pysqlcipher, self).\
+        conn = super(SQLiteDialect_pysqlcipher, self). \
             connect(*cargs, **cparams)
         conn.execute('pragma key="%s"' % passphrase)
         for prag, value in pragmas.items():
@@ -108,9 +108,10 @@ class SQLiteDialect_pysqlcipher(SQLiteDialect_pysqlite):
         super_url = _url.URL(
             url.drivername, username=url.username,
             host=url.host, database=url.database, query=url.query)
-        c_args, opts = super(SQLiteDialect_pysqlcipher, self).\
+        c_args, opts = super(SQLiteDialect_pysqlcipher, self). \
             create_connect_args(super_url)
         opts['passphrase'] = url.password
         return c_args, opts
+
 
 dialect = SQLiteDialect_pysqlcipher

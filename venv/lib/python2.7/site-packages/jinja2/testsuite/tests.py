@@ -17,7 +17,6 @@ env = Environment()
 
 
 class TestsTestCase(JinjaTestCase):
-
     def test_defined(self):
         tmpl = env.from_string('{{ missing is defined }}|{{ true is defined }}')
         assert tmpl.render() == 'False|True'
@@ -52,8 +51,10 @@ class TestsTestCase(JinjaTestCase):
             {{ mydict is mapping }}
             {{ [] is mapping }}
         ''')
+
         class MyDict(dict):
             pass
+
         assert tmpl.render(mydict=MyDict()).split() == [
             'False', 'True', 'False', 'True', 'True', 'False',
             'True', 'True', 'True', 'True', 'False', 'True',

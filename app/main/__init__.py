@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 from flask import Blueprint
 
 main = Blueprint('main', __name__)
@@ -6,6 +6,7 @@ main = Blueprint('main', __name__)
 from . import views, errors
 
 import sys
+
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
     reload(sys)

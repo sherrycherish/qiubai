@@ -68,6 +68,7 @@ class MxODBCConnector(Connector):
             conn.datetimeformat = self.dbapi.PYDATETIME_DATETIMEFORMAT
             conn.decimalformat = self.dbapi.DECIMAL_DECIMALFORMAT
             conn.errorhandler = self._error_handler()
+
         return connect
 
     def _error_handler(self):
@@ -84,6 +85,7 @@ class MxODBCConnector(Connector):
                               stacklevel=2)
             else:
                 raise errorclass(errorvalue)
+
         return error_handler
 
     def create_connect_args(self, url):
@@ -134,7 +136,7 @@ class MxODBCConnector(Connector):
 
     def _get_direct(self, context):
         if context:
-            native_odbc_execute = context.execution_options.\
+            native_odbc_execute = context.execution_options. \
                 get('native_odbc_execute', 'auto')
             # default to direct=True in all cases, is more generally
             # compatible especially with SQL Server
